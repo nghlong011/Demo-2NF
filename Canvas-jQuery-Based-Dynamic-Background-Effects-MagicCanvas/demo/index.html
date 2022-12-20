@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jQuery MagicCanvas Example</title>
+    <style>
+        body {
+            background: url("https://unsplash.it/2560/1440?image=1004") no-repeat;
+            background-size: cover;
+            min-height: 960px;
+        }
+
+        h1,h2 {
+            left:80%;
+            color: white;
+            position: fixed;
+        }
+
+        button {
+            font-size: large;
+        }
+        #btn1 {
+            position: fixed;
+            top: 1em;
+        }
+
+        #btn2 {
+            position: fixed;
+            top: 3em;
+        }
+    </style>
+</head>
+<body>
+<h1>MagicCanvas Example<br/></h1>
+<h2><br/><br/><br>
+by decaywood </h2>
+<button id="btn2" type="button" onclick="heart_beat()">Heart Beat demo</button>
+<button id="btn1" type="button" onclick="random_move()">Random Move demo</button>
+<canvas id="reactive-bg-canvas"></canvas>
+</body>
+<script></script>
+<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenLite.min.js"></script>
+<script src="../magic-canvas.min.js"></script>
+<script>
+    function heart_beat () {
+        $.magicCanvas.draw({
+            lineLen: 18,
+            heartBeatCD: 3000,
+            heartBeatRange: 300,
+            type:"heart-beat",
+            rgb : function (circlePos, heartBeatCenter) {
+                var px = circlePos.x; // a point on boom circle
+                var py = circlePos.y;
+                var hbcx = heartBeatCenter.x;
+                var hbcy = heartBeatCenter.y;
+
+                var dis = Math.pow((px - hbcx), 2) + Math.pow((py - hbcy), 2);
+                var maxDis = 300 * 300;
+
+                var r = parseInt(255 * dis / maxDis);
+                // do some computation....
+                return {r:r,g:217,b:203};
+            }
+        })
+    }
+
+    function random_move () {
+        $.magicCanvas.draw({
+            type:"random-move",
+            rgb : function (circlePos) {
+                var px = circlePos.x;
+                var py = circlePos.y;
+                // do some computation....
+                return {r:parseInt(px % 255),g:parseInt(py % 255),b:203};
+            }
+        })
+    };
+</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36251023-1']);
+  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</html>
